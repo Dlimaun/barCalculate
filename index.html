@@ -3,6 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<meta names="apple-mobile-web-app-status-bar-style" conttent = "black-translucent"/>
+
 		<title> BarCalculate</title>			
 
 		<link rel="stylesheet" type="text/css" href="css/estilo.css">	
@@ -35,7 +39,7 @@
 			                	<a data-role="button" href="#page1" class="minus">-</a>
 			                    <a data-role="button" href="#page1" class="plus">+</a>
 			                </span>
-			                <label class="quantity" data-valor="4">0</label>
+			                <label data-name="cerveja" class="quantity" data-valor="4">0</label>
 		                </div>	
 		                
 		            </li>		            
@@ -53,7 +57,7 @@
 			                	<a data-role="button" href="#page1" class="minus">-</a>
 			                    <a data-role="button" href="#page1" class="plus">+</a>
 			                </span>
-			                <label class="quantity" data-valor="3">0</label>
+			                <label data-name="refrigerante" class="quantity" data-valor="3">0</label>
 		                </div>
 		                
 		            </li>
@@ -71,7 +75,7 @@
 			                	<a data-role="button" href="#page1" class="minus">-</a>
 			                    <a data-role="button" href="#page1" class="plus">+</a>
 			                </span>
-			                <label class="quantity" data-valor="12">0</label>
+			                <label data-name="bolinhoDeCarne" class="quantity" data-valor="12">0</label>
 		                </div>
 		                
 		            </li>
@@ -89,14 +93,14 @@
 			                	<a data-role="button" href="#page1" class="minus">-</a>
 			                    <a data-role="button" href="#page1" class="plus">+</a>
 			                </span>
-			                <label class="quantity" data-valor="15">0</label>
+			                <label data-name="tulipaDeFrango" class="quantity" data-valor="15">0</label>
 		                </div>
 		                
 		            </li>
 
 		            <li data-role="list-divider" role="footer">
 		            	<label for="">Quantidade de Pessoas:</label>
-		            	<input type="text" id="qtd_pessoas" class="soNumeros">
+		            	<input type="text" id="qtd_pessoas" class="soNumeros" val="0"/>
                 		<a data-role="button" href="#page1" id="bt_calcular">Calcular</a>
                 		<label for="">Resultado:</label>
 		            	<input type="text" id="resultado" disabled="true">
@@ -122,7 +126,21 @@
 			jQuery(document).ready(function(){
 				jQuery(".soNumeros").keypress(function() {
                     soNumeros(event);
-                });				
+                });
+
+
+				jQuery(".quantity").each(function(i, value){
+					var label = jQuery(this);
+					console.log(label.data("name"));
+					var value = localStorage.getItem(label.data("name"));
+					if (value != null) label.text(value);
+				});
+				jQuery("#qtd_pessoas").val(localStorage.getItem("qtd_pessoas"));
+				jQuery("#resultado").val(localStorage.getItem("resultado"));
+			});
+			
+			jQuery("#qtd_pessoas").on("blur", function(){
+				localStorage.setItem("qtd_pessoas", jQuery(this).val());
 			});
 
 			jQuery("#bt_calcular").on("click", function(){
@@ -137,9 +155,11 @@
 					
 				});
 
-				valor_total = valor_total/qtd_pessoas;				
+				valor_total = (valor_total/qtd_pessoas).toFixed(2);				
 
-				jQuery("#resultado").val("R$ "+valor_total.toFixed(2));
+				jQuery("#resultado").val("R$ "+valor_total);
+
+				localStorage.setItem("resultado", valor_total);
 
 			});
 
@@ -162,6 +182,8 @@
 				}
 				
 				label.text(value);
+
+				localStorage.setItem(label.data("name"), value);
 			}
 
 			function soNumeros(evt) {
