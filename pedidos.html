@@ -16,7 +16,7 @@
 	<body>
 
 		<!-- Home -->
-		<div data-role="page" id="list">
+		<div data-role="page" id="page-pedidos">
 			
 			<div data-theme="a" data-role="header">		        
 		        <h3>
@@ -128,11 +128,11 @@
 	        </div>
 
 		    <div data-role="content">				
-			<a href="#">
-						<img class="asterisco" src="img/tulipa_de_frango.jpg" alt="" width="50px" >
-						<img class="texto" src="img/bolinho.jpg" alt="" width="50px" >
+				<!-- <a href="#">
+					<img class="asterisco" src="img/tulipa_de_frango.jpg" alt="" width="50px" >
+					<img class="texto" src="img/bolinho.jpg" alt="" width="50px" >
 					    
-					</a>
+				</a> -->
 		    </div>
 
 		</div>
@@ -146,6 +146,12 @@
 								
 
 			jQuery(document).ready(function(){				
+
+				jQuery( document ).on( "pagebeforeload", function( event, data ) {
+					// data.options.data = id_geral;
+ 					// console.log("data 2", data);
+ 					data.deferred.resolve( data.absUrl, data.options, page );
+				});				
 
 				console.log("antes div");
 
@@ -168,7 +174,7 @@
 										'</div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div>' +
 								'</li>'; 
 
-console.log(" ANTES html2");
+
 					var html2 = '<li data-theme="d" class="ui-li ui-li-static ui-btn-up-d ui-li-has-count ui-li-has-thumb">'+
 		               	'<span class="block">'+ prato.nome +'</span>'+
 		               	'<label class="block floatLeft margin_right">Preço:</label>'+
@@ -194,7 +200,6 @@ console.log(" ANTES html2");
 		                '</div>	'+		                
 		            '</li>';
 					
-console.log("html2");
 
 		            div_lista_pedido.append(html2);
 					

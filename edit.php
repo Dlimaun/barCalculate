@@ -16,7 +16,7 @@
 	<body>
 
 		<!-- Add -->
-		<div data-role="page" id="page1">
+		<div data-role="page" id="page-edit">
 		    <div data-theme="a" data-role="header">
 		        <a id="btn-salvar" data-role="button" href="#page1" class="ui-btn-right">
 		            Salvar
@@ -50,12 +50,14 @@
 		<script src="js/model/Prato.js"></script>
 		
 		<script>			
-			var prato_id = '<?= $_GET["id"]; ?>';					
+			var prato_id = '<?= $_GET["id"]; ?>';								
 
 			jQuery(document).ready(function(){		
-
-				var json  	 = localStorage.getItem(prato_id);
-				var prato 	 = new Prato().json_em_obj(json);
+			// alert( "OI3");
+				// $.mobile.changePage();
+					
+				
+				var prato 	 = new Prato().pegar_prato_por_id(prato_id);
 				var nome  	 = jQuery("#nome");
 				var preco 	 = jQuery("#preco");
 				var id_prato = jQuery("#id-prato");

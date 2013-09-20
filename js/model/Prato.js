@@ -53,6 +53,11 @@ function Prato() {
 		return true;
 	}
 
+	self.pegar_prato_por_id = function(prato_id) {
+		var json  	 = localStorage.getItem(prato_id);
+		var prato 	 = self.json_em_obj(json);
+		return prato;
+	}
 
 	self.obj_em_json = function() {
 		var json = '{"id":"'+ self.id +'","nome":"'+ self.nome +'","preco":"'+ self.preco +'"}';

@@ -16,10 +16,10 @@
 	<body>
 
 		<!-- Home -->
-		<div data-role="page" id="list">
+		<div data-role="page" id="page-pratos">
 			
 			<div data-theme="a" data-role="header">
-		        <a data-role="button" href="../new.html" class="ui-btn-right" data-transition="slide">
+		        <a data-role="button" href="new.html" class="ui-btn-right" data-transition="slide">
             		Novo
         		</a>
 		        <h3>
@@ -70,6 +70,29 @@
 		<script>
 			
 			jQuery(document).ready(function(){				
+
+				var id_geral = "";
+				// $.mobile.changePage( "edit.php", { data: "id=prato-9",transition: "slideup", changeHash: true, reloadPage: true, type: "get", allowSamePageTransition: true });
+
+
+				// jQuery( document ).on( "pageload", function( event, data ) {
+				// 	console.log("loaded", data);
+				// 	var prato 	 = new Prato().pegar_prato_por_id(data.options.data);
+				// 	var nome  	 = jQuery("#nome");
+				// 	var preco 	 = jQuery("#preco");
+				// 	var id_prato = jQuery("#id-prato");
+
+				// 	nome.val(prato.nome);
+				// 	preco.val(prato.preco);
+				// 	id_prato.val(prato.id);
+				// });
+
+				jQuery( document ).on( "pagebeforeload", function( event, data ) {
+					// data.options.data = id_geral;
+ 					// console.log("data 2", data);
+ 					data.deferred.resolve( data.absUrl, data.options, page );
+				});				
+
 				var div_lista_prato = jQuery("#lista-prato");
 
 				var prato = new Prato();				
@@ -83,7 +106,7 @@
 									 'data-wrapperels="div" data-icon="arrow-r" data-iconpos="right"'+
 									 'class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-last-child ui-btn-up-c">'+
 									 '<div class="ui-btn-inner ui-li"><div class="ui-btn-text">'+
-										'<a href="../edit.php?id='+ prato.id +'" data-transition="slide" class="ui-link-inherit">' + 
+										'<a href="edit.php?id='+prato.id+'" data-transition="slide" class="ui-link-inherit btn-edit">' + 
 											prato.nome +' R$ '+ prato.preco + 
 										'</a>'+ 
 										'</div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div>' +
