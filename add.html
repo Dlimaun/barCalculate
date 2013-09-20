@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html lang="en" manifest="cache.php">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<meta names="apple-mobile-web-app-status-bar-style" conttent = "black-translucent"/>
+
+		<title> BarCalculate</title>			
+
+		<link rel="stylesheet" type="text/css" href="css/estilo.css">	
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.3.2.min.css">	
+
+	</head>
+	<body>
+
+		<!-- Add -->
+		<div data-role="page" id="page1">
+		    <div data-theme="a" data-role="header">
+		        <a id="btn-salvar" data-role="button" href="#page1" class="ui-btn-right">
+		            Salvar
+		        </a>
+		        <h3>
+		            Novo Prato
+		        </h3>
+		        <div data-role="fieldcontain">
+		            <label for="nome">
+		                Nome
+		            </label>
+		            <input name="nome" id="nome" placeholder="" value="" type="text">
+		        </div>
+		        <div data-role="fieldcontain">
+		            <label for="valor">
+		                Valor
+		            </label>
+		            <input name="" id="valor" placeholder="" value="" type="text">
+		        </div>
+		    </div>
+		    <div data-role="content">
+		    </div>
+		</div>
+
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/jquery.mobile-1.3.2.min.js"></script>
+		
+		<script>
+			
+			jQuery(document).ready(function(){
+				jQuery(".soNumeros").keypress(function() {
+                    soNumeros(event);
+                });
+
+
+				jQuery(".quantity").each(function(i, value){
+					var label = jQuery(this);
+					console.log(label.data("name"));
+					var value = localStorage.getItem(label.data("name"));
+					if (value != null) label.text(value);
+				});
+				jQuery("#qtd_pessoas").val(localStorage.getItem("qtd_pessoas"));
+				jQuery("#resultado").val(localStorage.getItem("resultado"));
+			});
+			
+			jQuery("#qtd_pessoas").on("blur", function(){
+				localStorage.setItem("qtd_pessoas", jQuery(this).val());
+			});
+
+			jQuery("#bt_calcular").on("click", function(){
+				var qtd_pessoas = parseInt(jQuery("#qtd_pessoas").val());
+				var valor_total = 0.0;
+
+				jQuery(".quantity").each(function(i, value){
+					var qtd   = parseInt(jQuery(this).text());
+					var price = parseFloat(jQuery(this).data('valor'));
+
+					valor_total += (qtd * price); 					
+					
+				});
+
+				valor_total = (valor_total/qtd_pessoas).toFixed(2);				
+
+				jQuery("#resultado").val("R$ "+valor_total);
+
+				localStorage.setItem("resultado", valor_total);
+
+			});
+
+			jQuery(".minus").on("click", function(){								
+				plusOrMinus(jQuery(this), "-");				
+			});
+			jQuery(".plus").on("click", function(){								
+				plusOrMinus(jQuery(this), "+");				
+			});
+
+			function plusOrMinus(div, plusOrMinus) {
+				var label 	   = div.parent().parent().siblings(".quantity");				
+				var value 	   = parseInt(label.text());
+				if (plusOrMinus == "-") {
+					if (value > 0) {
+						value -= 1;	
+					}
+				} else {
+					value += 1;
+				}
+				
+				label.text(value);
+
+				localStorage.setItem(label.data("name"), value);
+			}
+
+			function soNumeros(evt) {
+			    var theEvent = evt || window.event;
+			    var key = ( theEvent.which ) ? theEvent.which : theEvent.keyCode
+			    key = String.fromCharCode( key );
+			    var regex = /[0-9]/;
+			    if ([evt.keyCode||evt.which]==8 || [evt.keyCode||evt.which]== 9 || [evt.keyCode||evt.which]== 13) //this is to allow backspace (8), tab(9), enter(13)
+			        return true;
+			    if( !regex.test(key) ) {
+			        theEvent.returnValue = false;
+			        theEvent.preventDefault();
+			    }
+			}
+
+		</script>
+
+	</body>
+</html>
