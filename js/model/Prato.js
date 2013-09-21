@@ -16,8 +16,8 @@ function Prato() {
 			qtd_pratos = parseInt(qtd_pratos) + 1;
 		}
 
-		self.id = "prato-"+qtd_pratos;
-		
+		self.id = "prato-"+qtd_pratos;		
+
 		localStorage.setItem("qtd_pratos", qtd_pratos);
 		localStorage.setItem(self.id, self.obj_em_json());
 
@@ -59,9 +59,8 @@ function Prato() {
 		return prato;
 	}
 
-	self.obj_em_json = function() {
-		var json = '{"id":"'+ self.id +'","nome":"'+ self.nome +'","preco":"'+ self.preco +'"}';
-		return json;
+	self.obj_em_json = function() {		
+		return JSON.stringify(self);
 	}
 
 	self.json_em_obj = function(json) {

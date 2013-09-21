@@ -1,0 +1,38 @@
+#ator {
+  width: 100px;
+  height: 100px;
+  background-color: red;  
+  position: fixed;
+  
+  -webkit-animation-name: chapeuzinhoVermelho;
+  -webkit-animation-duration: 3s;
+  -webkit-danimation-delay: 3s;
+  -webkit-animation-direction: alternate;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  /*-webkit-animation-fill-mode: backwards;*/
+  /*-webkit-animation-fill-mode: forwards;*/
+  -webkit-animation-fill-mode: both;
+
+  -webkit-animation: chapeuzinhoVermelho 3s 3s alternate infinite linear both;
+  
+}
+
+@-webkit-keyframes chapeuzinhoVermelho {
+ 
+  0% {
+    background-color: green;
+    left: 0; margin-left: 0;
+  }
+  
+  50% {
+    background-color: yellow;
+    left: 50%; margin-left: -50px;
+  }
+  
+  
+  100% {
+    background-color: blue;
+    left: 100%; margin-left: -100px;
+  }
+}
