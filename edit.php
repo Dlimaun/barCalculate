@@ -1,120 +1,90 @@
 <!DOCTYPE HTML>
-<html lang="en" manifest="cache.php">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		<meta name="apple-mobile-web-app-capable" content="yes"/>
-		<meta names="apple-mobile-web-app-status-bar-style" conttent = "black-translucent"/>
+<html lang="en" >
 
-		<title> BarCalculate</title>			
+    <body>
 
-		<link rel="stylesheet" type="text/css" href="css/estilo.css">	
-		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.3.2.min.css">	
+        <div class="btn-new "></div> 
 
-	</head>
-	<body>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Editar Prato</h3>
+            </div>
 
-		<!-- Add -->
-		<div data-role="page" id="page-edit">
-		    <div data-theme="a" data-role="header">
-		        <a id="btn-salvar" data-role="button" href="#page1" class="ui-btn-right">
-		            Salvar
-		        </a>
-		        <h3>
-		            Editar Prato
-		        </h3>
-		        <input type="hidden" id="id-prato">
-		        <div data-role="fieldcontain">
-		            <label for="nome">
-		                Nome
-		            </label>
-		            <input name="nome" id="nome" placeholder="" value="" type="text">
-		        </div>
-		        <div data-role="fieldcontain">
-		            <label for="preco">
-		                Preço
-		            </label>
-		            <input name="" id="preco" class="soNumeros" placeholder="" value="" type="text">
-		        </div>
-		        <div data-role="fieldcontain">
-		        	<a data-role="button" href="#" id="btn-remover">Remover</a>
-		       	</div>
-		    </div>
-		    
-		</div>
+            <div class="panel-body">
+                <input type="hidden" id="id-prato">
 
-		<script src="js/jquery-1.9.1.min.js"></script>
-		<script src="js/jquery.mobile-1.3.2.min.js"></script>
-		<script src="js/util/util.js"></script>
-		<script src="js/model/Prato.js"></script>
-		
-		<script>			
-			var prato_id = '<?= $_GET["id"]; ?>';								
+                <input type="text" id="nome" class="margin_top form-control" placeholder="Nome">                 
 
-			jQuery(document).ready(function(){		
-			// alert( "OI3");
-				// $.mobile.changePage();
-					
+                <div class="clear"></div>
+
+                <input type="text" id="preco" class="fmargin_top form-control maskMoney" placeholder="Preço">   
+
+                <div class="clear"></div> 
+
+                <button class="btn btn-primary margin_top" id="btn-salvar"><span class="glyphicon glyphicon-ok"></span> Salvar</button>
+                <button class="btn btn-danger margin_top" id="btn-remover"><span class="glyphicon glyphicon-minus"></span> Remover</button>
+            </div>
+
+        </div>
+
+        <script>			
+            var prato_id = '<?= $_GET["id"]; ?>';								
+
+            jQuery(document).ready(function(){		
+                jQuery(".maskMoney").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true});
+
+                var prato    = new Prato().pegar_prato_por_id(prato_id);
+                var nome     = jQuery("#nome");
+                var preco    = jQuery("#preco");
+                var id_prato = jQuery("#id-prato");
+
+                nome.val(prato.nome);
+                preco.val(prato.preco);
+                id_prato.val(prato.id);
 				
-				var prato 	 = new Prato().pegar_prato_por_id(prato_id);
-				var nome  	 = jQuery("#nome");
-				var preco 	 = jQuery("#preco");
-				var id_prato = jQuery("#id-prato");
-
-				nome.val(prato.nome);
-				preco.val(prato.preco);
-				id_prato.val(prato.id);
-				
-				
-
-				jQuery(".soNumeros").keypress(function() {
-                    soNumeros(event);
-                });
-
-				var btn_salvar  = jQuery("#btn-salvar");
-				var btn_remover = jQuery("#btn-remover");
+                var btn_salvar  = jQuery("#btn-salvar");
+                var btn_remover = jQuery("#btn-remover");
 
                 btn_salvar.on("click", pega_dados_prato);
 
                 btn_remover.on("click", remover_prato);
 
 
-			});					
+            });					
 
-			function remover_prato() {
-				var prato 	 = new Prato();				
-				var id_prato = jQuery("#id-prato");
-				var retorno  = false;
+            function remover_prato() {
+                var prato    = new Prato();				
+                var id_prato = jQuery("#id-prato");
+                var retorno  = false;
 
-				prato.id 	= id_prato.val();
+                prato.id = id_prato.val();
 				
-				retorno = prato.remover_prato();
+                retorno = prato.remover_prato();
 
-				if (retorno == true) {
-					location.href="pratos.html";
-				}
-			}
+                if (retorno == true) {
+                    set_pagina("pratos.html");
+                }
+            }
 
-			function pega_dados_prato() {
-				var prato 	 = new Prato();
-				var nome  	 = jQuery("#nome");
-				var preco 	 = jQuery("#preco");
-				var id_prato = jQuery("#id-prato");
-				var retorno  = false;
+            function pega_dados_prato() {
+                var prato    = new Prato();
+                var nome     = jQuery("#nome");
+                var preco    = jQuery("#preco");
+                var id_prato = jQuery("#id-prato");
+                var retorno  = false;
 
-				prato.id 	= id_prato.val();
-				prato.nome  = nome.val();
-				prato.preco = preco.val();
+                prato.id    = id_prato.val();
+                prato.nome  = nome.val();
+                prato.preco = preco.val();
 
-				retorno = prato.editar_prato();
+                retorno = prato.editar_prato();
 
-				if (retorno == true) {
-					location.href="pratos.html";
-				}
-			}
+                if (retorno == true) {
+                    set_pagina("pratos.html");
+                }
+            }
 
-		</script>
+        </script>
 
-	</body>
+    </body>
 </html>

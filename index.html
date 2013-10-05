@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<!--<html lang="en">-->
+<html lang="en" manifest="cache.appcache">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta names="apple-mobile-web-app-status-bar-style" content = "black-translucent"/>
+
+        <title> BarCalculate</title>			
+
+        <link rel="stylesheet" type="text/css" href="css/estilo.css">			
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css">
+
+    </head>
+    <body>
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <a class="navbar-brand" href="javascript:void(0)" >BarCalculate</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="link active" data-href="pedidos.html"><a href="javascript:void(0)">Pedidos</a></li>
+                        <li class="link" data-href="pratos.html"><a href="javascript:void(0);">Pratos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--        <nav class="navbar navbar-inverse" role="navigation">
+                    
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">BarCalculate</a>
+                    </div>
+                    
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="link active" data-href="pedidos.html"><a href="javascript:void(0)">Pedidos</a></li>
+                            <li class="link" data-href="pratos.html"><a href="javascript:void(0);">Pratos</a></li>
+                        </ul>
+                    </div>
+                    
+                </nav>-->
+
+        <div id="page" class="container">
+
+        </div>
+
+        <script src="js/jquery-2.0.2.min.js"></script>
+        <script src="bootstrap/js/bootstrap.js"></script>
+        <script src="js/jquery.maskMoney.js"></script>
+        <script src="js/util/util.js"></script>
+        <script src="js/model/Prato.js"></script>
+
+
+        <script>
+            jQuery(document).ready(function(){
+                set_pagina('pedidos.html');
+            });
+        </script>
+
+    </body>
+</html>

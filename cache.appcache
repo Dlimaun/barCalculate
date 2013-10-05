@@ -1,16 +1,26 @@
 CACHE MANIFEST
-#versao 47
+#versao 55
 
 CACHE:
 index.html
+new.html
+edit.php
+pedidos.html
+pratos.html
+
 css/estilo.css
-css/jquery.mobile-1.3.2.min.css
-img/cerveja.jpg
-img/refrigerante.jpg
-img/bolinho.jpg
-img/tulipa_de_frango.jpg
-js/jquery-1.9.1.min.js
-js/jquery.mobile-1.3.2.min.js 
+bootstrap/css/bootstrap.css
+
+js/model/Prato.js
+js/util/util.js
+js/jquery-2.0.2.min.js 
+js/jquery.maskMoney.js 
+bootstrap/js/bootstrap.js
+
+bootstrap/fonts/glyphicons-halflings-regular.eot
+bootstrap/fonts/glyphicons-halflings-regular.svg
+bootstrap/fonts/glyphicons-halflings-regular.ttf
+bootstrap/fonts/glyphicons-halflings-regular.woff
 
 NETWORK:
 *

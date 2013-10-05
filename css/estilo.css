@@ -1,3 +1,13 @@
+#page {
+    margin-top: 50px;
+}
+
+.btn-new {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+
 /*#span-value-movement {
 	background: green;
 }*/
@@ -53,15 +63,8 @@ a:hover .texto { transform: scale(1.2); }
 	margin-left: 20px;
 }
 
-.quantity{
-	border: 1px solid #ddd;
-	display: block;
-	margin-left: 20px;
-	width: 33px;
-	height: 33px;
-	border-radius: 6px;
-	margin-top: -6px;
-	text-align: center;	
+.margin_top{
+	margin-top: 5px;
 }
 
 .clear{

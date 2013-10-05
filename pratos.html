@@ -1,125 +1,66 @@
 <!DOCTYPE HTML>
-<html lang="en" manifest="cache.php">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		<meta name="apple-mobile-web-app-capable" content="yes"/>
-		<meta names="apple-mobile-web-app-status-bar-style" conttent = "black-translucent"/>
+<html lang="en">
+    <body>
+        
+        <div class="btn-new ">
+            <button class="btn btn-primary" id="btn-novo"><span class="glyphicon glyphicon-plus-sign"></span> Novo</button>
+        </div>
+        
+        <div class="list-group">
+            <!-- <a href="#" class="list-group-item active">
+                <span class="badge">></span>
+                <h4 class="list-group-item-heading">Fanta</h4>
+                <p class="list-group-item-text">R$ 1,00</p>
+            </a>-->
+        </div>
 
-		<title> BarCalculate</title>			
-
-		<link rel="stylesheet" type="text/css" href="css/estilo.css">	
-		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.3.2.min.css">	
-
-	</head>
-	<body>
-
-		<!-- Home -->
-		<div data-role="page" id="page-pratos">
+        <script>
 			
-			<div data-theme="a" data-role="header">
-		        <a data-role="button" href="new.html" class="ui-btn-right" data-transition="slide">
-            		Novo
-        		</a>
-		        <h3>
-		            BarCalculate
-		        </h3>	
+            jQuery(document).ready(function(){				
 
-				  <div data-role="navbar" data-iconpos="right">
-		            <ul>
-		                <li>
-		                    <a href="pedidos.html" data-transition="fade" data-theme="" data-icon="">
-		                        Pedidos
-		                    </a>
-		                </li>
-		                <li>
-		                    <a href="pratos.html" data-transition="fade" data-theme="" data-icon="" class="btn-pratos">
-		                        Pratos
-		                    </a>
-		                </li>
-		            </ul>
-		        </div>
-			
-	        	<ul id="lista-prato" data-role="listview" data-divider-theme="b" data-inset="true">
-		            <!-- <li data-theme="c">
-		                <a href="#" data-transition="slide">
-		                    Button
-		                </a>
-		            </li>
-		            <li data-theme="c">
-		                <a href="#page1" data-transition="slide">
-		                    Button
-		                </a>
-		            </li> -->
-		        </ul>	
+                var id_geral = "";
 
-	        </div>
+                var div_lista_prato = jQuery(".list-group"),
+                    btn_novo        = jQuery('#btn-novo'),
+                    page            = jQuery('#page');
 
-		    <div data-role="content">				
-			
-		    </div>
+                var prato = new Prato();				
 
-		</div>
-		
-		<script src="js/jquery-1.9.1.min.js"></script>
-		<script src="js/jquery.mobile-1.3.2.min.js"></script>
-		<script src="js/util/util.js"></script>
-		<script src="js/model/Prato.js"></script>
-		
-		<script>
-			
-			jQuery(document).ready(function(){				
+                var pratos = prato.lista_pratos();				
 
-				var id_geral = "";
-				// $.mobile.changePage( "edit.php", { data: "id=prato-9",transition: "slideup", changeHash: true, reloadPage: true, type: "get", allowSamePageTransition: true });
-
-
-				// jQuery( document ).on( "pageload", function( event, data ) {
-				// 	console.log("loaded", data);
-				// 	var prato 	 = new Prato().pegar_prato_por_id(data.options.data);
-				// 	var nome  	 = jQuery("#nome");
-				// 	var preco 	 = jQuery("#preco");
-				// 	var id_prato = jQuery("#id-prato");
-
-				// 	nome.val(prato.nome);
-				// 	preco.val(prato.preco);
-				// 	id_prato.val(prato.id);
-				// });
-
-				jQuery( document ).on( "pagebeforeload", function( event, data ) {
-					// data.options.data = id_geral;
- 					// console.log("data 2", data);
- 					data.deferred.resolve( data.absUrl, data.options, page );
-				});				
-
-				var div_lista_prato = jQuery("#lista-prato");
-
-				var prato = new Prato();				
-
-				var pratos = prato.lista_pratos();				
-
-				jQuery.each(pratos, function(index, prato){
-					// console.log("index:", index);
-					// console.log("val:", prato);
-					var html = '<li data-theme="c" data-corners="false" data-shadow="false" data-iconshadow="true"'+
-									 'data-wrapperels="div" data-icon="arrow-r" data-iconpos="right"'+
-									 'class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-last-child ui-btn-up-c">'+
-									 '<div class="ui-btn-inner ui-li"><div class="ui-btn-text">'+
-										'<a href="edit.php?id='+prato.id+'" data-transition="slide" class="ui-link-inherit btn-edit">' + 
-											prato.nome +' R$ '+ prato.preco + 
-										'</a>'+ 
-										'</div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div>' +
-								'</li>'; 
+                jQuery.each(pratos, function(index, prato){
+                    // console.log("index:", index);
+                    // console.log("val:", prato);
+                    var html = '<a href="javascript:void(0)" data-href="edit.php?id='+prato.id+'" class="prato-item list-group-item">' +
+                                    '<span class="badge">></span>' +
+                                    '<h4 class="list-group-item-heading">'+prato.nome+'</h4>'+                                    
+                                    '<p class="list-group-item-text">'+prato.preco+'</p>' +
+                               '</a>'
+                           
+                    div_lista_prato.append(html);
 					
-		            div_lista_prato.append(html);
-					
-				});
+                });
+                
+                btn_novo.off().on('click', function(){
+                    set_pagina("new.html");
+                })
+                
+                page.off().on('click', '.prato-item', function(){
+                    var retorno = verifica_internet();
+                    
+                    if (retorno) {
+                        var link = jQuery(this).data('href');                    
+                        set_pagina(link); 
+                    } else {
+                        alert("Não pode editar um prato sem internet");
+                    }
+                    
+                });
 
-			});
+            });
 						
 
-		</script>
+        </script>
 
-	</body>
+    </body>
 </html>

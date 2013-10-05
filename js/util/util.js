@@ -10,3 +10,24 @@ function soNumeros(evt) {
         theEvent.preventDefault();
     }
 }
+
+jQuery(".link").off().on('click', function(){
+    jQuery('.link').removeClass('active');
+    jQuery(this).addClass('active');
+    
+    var li_link = jQuery(this),
+    href        = li_link.data('href');
+                    
+    set_pagina(href);    
+});
+
+function set_pagina(href) {
+    console.log('clicked page', href);
+    jQuery('#page').children().remove();
+    jQuery('#page').load(href);
+}
+
+
+function verifica_internet() {
+    return window.navigator.onLine;
+}
