@@ -14,25 +14,19 @@
 
 a { color: #333; }
 
-.asterisco { 
+.btn-transform { 
 transition: width 1s, height 5s, transform 2s;
 -webkit-transition: width 2s, height 2s, -webkit-transform 2s;
 }
 
-a:hover .asterisco { 
--webkit-transform: rotate(180deg);
+.btn-transform:hover { 
+/*-webkit-transform: translate(10px,10px);*/
+-webkit-transform: scale(1.1,1.1);
 }
 
 .texto { transition: all 0.5s cubic-bezier(0.680, -0.550, 0.265, 1.550); }
 
 a:hover .texto { transform: scale(1.2); }
-
-.cerveja {
-	transition: all 0.5s ease;
-}
-.cerveja:hover {
-	transform: rotate(180deg);
-}
 
 .span-value-movements-debit {
 	background:  red;

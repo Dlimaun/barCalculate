@@ -21,8 +21,8 @@
 
                 <div class="clear"></div> 
 
-                <button class="btn btn-primary margin_top" id="btn-salvar"><span class="glyphicon glyphicon-ok"></span> Salvar</button>
-                <button class="btn btn-danger margin_top" id="btn-remover"><span class="glyphicon glyphicon-minus"></span> Remover</button>
+                <button class="btn-transform btn btn-primary margin_top" id="btn-salvar"><span class="glyphicon glyphicon-ok"></span> Salvar</button>
+                <button class="btn-transform btn btn-danger margin_top" id="btn-remover"><span class="glyphicon glyphicon-minus"></span> Remover</button>
             </div>
 
         </div>
