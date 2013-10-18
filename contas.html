@@ -39,8 +39,9 @@ and open the template in the editor.
                     var html = '<a href="javascript:void(0)" class="conta-item list-group-item row">' +
 //                            '<span class="badge">></span>' +
                             '<img class="img-rounded col-md-3" src="http://maps.googleapis.com/maps/api/staticmap?center=' + conta.coords.latitude + ',' + conta.coords.longitude + '&zoom=15&size=200x200&sensor=false">' +
-                            '<h4 class="list-group-item-heading">' + conta.nome + '</h4>' +
-                            '<p class="list-group-item-text">R$ ' + conta.total.toFixed(2) + '</p>' +
+                            '<h3 class="list-group-item-heading">' + conta.nome + '</h3>' +
+                            '<p class="list-group-item-text"><strong>Total</strong> R$ ' + conta.total.toFixed(2) + '</p>' +
+                            '<p class="list-group-item-text"><strong>Pessoas</strong> ' + conta.qtdPessoas + '</p>' +
                             '</a>'
 
                     div_lista_conta.append(html);
