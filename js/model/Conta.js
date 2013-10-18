@@ -45,7 +45,7 @@ function Conta() {
     self.salvar_conta = function() {
         console.log("Salvando conta");
 
-        calcular_total();
+        self.calcular_total();
 
         var qtd_contas = localStorage.getItem("qtd_contas");
         if (qtd_contas == null) {

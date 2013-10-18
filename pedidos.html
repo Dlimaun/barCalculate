@@ -249,8 +249,11 @@
             }
 
             function salvarConta() {
+                console.log("salvarConta");
                 conta.salvar_conta();
-
+                conta = new Conta();
+                conta.salvar_conta_atual();
+                set_pagina("contas.html");
             }
         </script>
 
