@@ -11,13 +11,13 @@ and open the template in the editor.
     <body>
         <div class="container">
             <h1>Histórico de Contas</h1>
-            <div class="list-group">
+<!--            <div class="list-group">
                 <a href="javascript:void(0)" class="conta-item list-group-item row">
                     <img class="img-rounded col-md-3" src="http://maps.googleapis.com/maps/api/staticmap?center=-9.6268329,-35.7320154&amp;zoom=15&amp;size=200x200&amp;sensor=false">
                     <h4 class="list-group-item-heading">Conta X</h4>
                     <p class="list-group-item-text">R$ 6,66</p>
                 </a>
-            </div>
+            </div>-->
         </div>
 
 
@@ -38,7 +38,7 @@ and open the template in the editor.
                 jQuery.each(contas, function(index, conta) {
                     var html = '<a href="javascript:void(0)" class="conta-item list-group-item row">' +
 //                            '<span class="badge">></span>' +
-                            '<img class="img-rounded col-md-3" src="http://maps.googleapis.com/maps/api/staticmap?center=' + conta.coords.latitude + ',' + conta.coords.longitude + '&zoom=11&size=200x200&sensor=false">' +
+                            '<img class="img-rounded col-md-3" src="http://maps.googleapis.com/maps/api/staticmap?center=' + conta.coords.latitude + ',' + conta.coords.longitude + '&zoom=15&size=200x200&sensor=false">' +
                             '<h4 class="list-group-item-heading">' + conta.nome + '</h4>' +
                             '<p class="list-group-item-text">R$ ' + conta.total.toFixed(2) + '</p>' +
                             '</a>'
