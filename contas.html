@@ -1,0 +1,72 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Histórico de Contas</h1>
+            <div class="list-group">
+                <a href="javascript:void(0)" class="conta-item list-group-item row">
+                    <img class="img-rounded col-md-3" src="http://maps.googleapis.com/maps/api/staticmap?center=-9.6268329,-35.7320154&amp;zoom=15&amp;size=200x200&amp;sensor=false">
+                    <h4 class="list-group-item-heading">Conta X</h4>
+                    <p class="list-group-item-text">R$ 6,66</p>
+                </a>
+            </div>
+        </div>
+
+
+        <script>
+
+            jQuery(document).ready(function() {
+
+                var id_geral = "";
+
+                var div_lista_conta = jQuery(".list-group"),
+                        btn_novo = jQuery('#btn-novo'),
+                        page = jQuery('#page');
+
+                var conta = new Conta();
+
+                var contas = conta.lista_contas();
+
+                jQuery.each(contas, function(index, conta) {
+                    var html = '<a href="javascript:void(0)" class="conta-item list-group-item row">' +
+//                            '<span class="badge">></span>' +
+                            '<img class="img-rounded col-md-3" src="http://maps.googleapis.com/maps/api/staticmap?center=' + conta.coords.latitude + ',' + conta.coords.longitude + '&zoom=11&size=200x200&sensor=false">' +
+                            '<h4 class="list-group-item-heading">' + conta.nome + '</h4>' +
+                            '<p class="list-group-item-text">R$ ' + conta.total.toFixed(2) + '</p>' +
+                            '</a>'
+
+                    div_lista_conta.append(html);
+
+                });
+
+                btn_novo.off().on('click', function() {
+                    set_pagina("new.html");
+                })
+
+                page.off().on('click', '.conta-item', function() {
+//                    var retorno = verifica_internet();
+//
+//                    if (retorno) {
+//                        var link = jQuery(this).data('href');
+//                        set_pagina(link);
+//                    } else {
+//                        alert("N√£o pode editar um conta sem internet");
+//                    }
+
+                });
+
+            });
+
+
+        </script>
+
+    </body>
+</html>

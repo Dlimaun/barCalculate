@@ -1,126 +1,257 @@
 <!DOCTYPE HTML>
 <html lang="en">	
     <body>
-
+        <div class="container titulo">
+            <h1 id="conta_txt_nome">Conta X</h1>
+            <div class="row collapse form-group">
+                <input class="form-control" type="text" id="conta_nome"/>
+                <button class="btn btn-default col-md-2 pull-right" id="conta_btn_salvar">Salvar</button>
+            </div>
+        </div>
         <div class="btn-new ">
             <label for="qtd_pessoas" class="slide">Quantidade de Pessoas</label>
             <input type="text" id="qtd_pessoas" class="form-control" value="0">
-            
+
             <div class="clear"></div>
-            
+
             <label for="resultado" class="margin_top">Divisão</label>            
             <h4><label id="resultado" class="margin_top label label-success">R$ 0,00</label></h4>
-            
+
         </div>
 
         <div class="list-group">
-<!--            <a href="javascript:void(0)" class="list-group-item">
-                <span class="badge">
-                    <button type="button" class="btn btn-danger minus">-</button>
-                    <span class="badge">10</span>                     
-                    <button type="button" class="btn btn-success plus">+</button>
-                </span>
+            <!--            <a href="javascript:void(0)" class="list-group-item">
+                            <span class="badge">
+                                <button type="button" class="btn btn-danger minus">-</button>
+                                <span class="badge">10</span>                     
+                                <button type="button" class="btn btn-success plus">+</button>
+                            </span>
+            
+                            <h4 class="list-group-item-heading">Fanta</h4>
+                            <p class="list-group-item-text">R$ 1,00</p>
+                        </a>-->
+        </div>
 
-                <h4 class="list-group-item-heading">Fanta</h4>
-                <p class="list-group-item-text">R$ 1,00</p>
-            </a>-->
+        <div class="btn-new pull-right ">
+            <button class="btn-transform btn btn-primary" id="btn-fechar"><span class="glyphicon glyphicon-floppy-disk"></span> Fechar conta</button>
         </div>
 
         <script>
-								
 
-            jQuery(document).ready(function(){
+
+            jQuery(document).ready(function() {
 
                 var div_lista_pedido = jQuery(".list-group");
 
-                var prato = new Prato();				
+                var prato = new Prato();
 
-                var pratos = prato.lista_pratos();				
+                var pratos = prato.lista_pratos();
 
-                jQuery.each(pratos, function(index, prato){
+                var conta = new Conta();
+                conta.carregar_conta_atual();
+                // num consegui fazer if conta == null
+                //  =(
+                try {
+                    var titulo = jQuery('.titulo>h1');
+                    var qtdPessoas = jQuery('#qtd_pessoas');
+                    titulo.text(conta.nome);
+                    qtdPessoas.val(conta.qtdPessoas);
+                    console.log("conta atual carregada = ");
+                } catch (err) {
+                }
+
+                jQuery.each(pratos, function(index, prato) {
                     // console.log("index:", index);
                     // console.log("val:", prato);
+                    var qtd = verificarQuantidadeDoPratoNaConta(prato, conta);
+//                    console.log(prato.nome + " " + qtd);
 
-                    var html = '<a href="javascript:void(0)" class="list-group-item">'+
-                        '<span class="badge">'+
-                        '<button type="button" class="btn btn-danger minus">-</button>'+
-                        '<span class="badge quantity" data-valor="'+ prato.preco +'">0</span>'+
-                        '<button type="button" class="btn btn-success plus">+</button>'+
-                        '</span>'+
-                        '<h4 class="list-group-item-heading">'+ prato.nome +'</h4>'+
-                        '<p class="list-group-item-text">'+ prato.preco +'</p>'+
-                        '</a>';    
+                    var html = '<a href="javascript:void(0)" class="list-group-item" data-id=' + prato.id + '>' +
+                            '<span class="badge">' +
+                            '<button type="button" class="btn btn-danger minus">-</button>' +
+                            '<span class="badge quantity" data-valor="' + prato.preco + '">' + qtd + '</span>' +
+                            '<button type="button" class="btn btn-success plus">+</button>' +
+                            '</span>' +
+                            '<h4 class="list-group-item-heading">' + prato.nome + '</h4>' +
+                            '<p class="list-group-item-text">' + prato.preco + '</p>' +
+                            '</a>';
 
                     div_lista_pedido.append(html);
-					
+
                 });
 
                 jQuery(".soNumeros").keypress(function() {
                     soNumeros(event);
-                });	                
+                });
 
                 jQuery('#qtd_pessoas').on('keyup', calcula_pedidos);
 
-                jQuery(".minus").on("click", function(){
-                    var quantity = jQuery(this).next();                    
-                    var value 	 = parseInt(quantity.text());
-                    var result   = plusOrMinus(value, "-");
-                    
-                    quantity.text(result);
-                    calcula_pedidos();
-                });
-                jQuery(".plus").on("click", function(){
-                    var quantity = jQuery(this).prev();
-                    var value 	 = parseInt(quantity.text());
-                    var result   = plusOrMinus(value, "+");
-                    
-                    quantity.text(result);
-                    calcula_pedidos();
-                });
-				
-            });
-												
+                jQuery(".minus").on("click", function() {
+                    var quantity = jQuery(this).next();
+                    var value = parseInt(quantity.text());
+                    var result = plusOrMinus(value, "-");
 
-            function plusOrMinus(value, plusOrMinus) {                
+                    quantity.text(result);
+                    calcula_pedidos();
+                });
+                jQuery(".plus").on("click", function() {
+                    var quantity = jQuery(this).prev();
+                    var value = parseInt(quantity.text());
+                    var result = plusOrMinus(value, "+");
+
+                    quantity.text(result);
+                    calcula_pedidos();
+                });
+
+                jQuery('#btn-fechar').on("click", fecharConta);
+                jQuery(".titulo>h1").on("click", tituloClick);
+//                jQuery("#conta_nome").on("change", tituloAlterar);
+                jQuery("#conta_btn_salvar").on("click", tituloAlterar);
+            });
+
+            function verificarQuantidadeDoPratoNaConta(prato, conta) {
+                var qtd = 0;
+                try {
+                    jQuery.each(conta.pratos, function(index, pratoConta) {
+//                        console.log(prato);
+//                        console.log(pratoConta);
+//                        console.log("-----------------" + pratoConta.qtd)
+                        if ((prato.id) == (pratoConta.id)) {
+                            qtd = pratoConta.qtd;
+                            return;
+                        }
+                    });
+                } catch (err) {
+                }
+                return qtd;
+            }
+
+
+            function plusOrMinus(value, plusOrMinus) {
                 if (plusOrMinus == "-") {
                     if (value > 0) {
-                        value -= 1;	
+                        value -= 1;
                     }
                 } else {
                     value += 1;
                 }
-		
+
                 return value;
-            }        
-            
-            function calcula_pedidos(){
-                    var qtd_pessoas = jQuery("#qtd_pessoas").val();
-                    var valor_total = 0.0;
-                    
-                    if (qtd_pessoas == '' || qtd_pessoas == 0) {
-                        jQuery("#resultado").text("R$ 0,00");
-                        return false;
-                    } else {
-                        qtd_pessoas = parseInt(qtd_pessoas);
+            }
+
+            function calcula_pedidos() {
+                var qtd_pessoas = jQuery("#qtd_pessoas").val();
+                var valor_total = 0.0;
+
+                if (qtd_pessoas == '' || qtd_pessoas == 0) {
+                    jQuery("#resultado").text("R$ 0,00");
+                    return false;
+                } else {
+                    qtd_pessoas = parseInt(qtd_pessoas);
+                }
+
+                jQuery(".quantity").each(function(i, value) {
+                    var qtd = parseInt(jQuery(this).text());
+                    var price = jQuery(this).data('valor');
+
+                    price = price.replace("R$", "").replace(".", "").replace(",", ".");
+                    var price_formatado = parseFloat(price);
+
+                    valor_total += (qtd * price);
+
+                });
+
+                valor_total = (valor_total / qtd_pessoas).toFixed(2);
+
+                jQuery("#resultado").text("R$ " + valor_total);
+
+                salvarContaAtual();
+            }
+
+            function tituloAlterar() {
+                var h1 = jQuery('.titulo>h1');
+                var input = jQuery('.titulo input');
+                h1.text(input.val());
+
+                var div = jQuery('.titulo>.row');
+                div.addClass("collapse");
+
+                salvarContaAtual();
+            }
+
+            function tituloClick() {
+                console.log("alterarTitulo");
+
+                var h1 = jQuery('.titulo>h1');
+                var div = jQuery('.titulo>.row');
+                var input = jQuery('.titulo input');
+
+//                h1.addClass('collapse');
+                div.removeClass('collapse');
+                input.val(h1.text());
+            }
+
+            function salvarContaAtual() {
+                console.log("salvarContaAtual")
+                getConta().salvar_conta_atual();
+            }
+
+            function getConta() {
+                var conta = new Conta();
+
+                var conta_txt_nome = jQuery('#conta_txt_nome');
+                var qtd_pessoas = jQuery('#qtd_pessoas');
+                var pratos = jQuery(".list-group-item");
+
+                jQuery.each(pratos, function(index, prato) {
+                    prato = jQuery(prato);
+                    var qtd = prato.find('.quantity');
+                    var titulo = prato.find('.list-group-item-heading');
+
+                    var preco = qtd.data('valor');
+                    preco = preco.replace("R$", "").replace(".", "").replace(",", ".");
+                    preco = parseFloat(preco);
+
+//                    console.log("prato id = "+prato.data('id'));
+
+                    var p = {};
+                    p.id = prato.data('id');
+                    p.qtd = parseInt(qtd.text());
+                    p.preco = preco;
+                    p.nome = titulo.text();
+                    if (p.qtd > 0) {
+                        conta.pratos.push(p);
                     }
-                    
-                    jQuery(".quantity").each(function(i, value){
-                        var qtd   = parseInt(jQuery(this).text());
-                        var price = jQuery(this).data('valor');
-                        
-                        price = price.replace("R$", "").replace(".", "").replace(",", ".");
-                        var price_formatado = parseFloat(price);
+                });
 
-                        valor_total += (qtd * price); 					
-						
-                    });
+                conta.nome = conta_txt_nome.text();
+                conta.qtdPessoas = parseInt(qtd_pessoas.val());
+                conta.timestamp = new Date().getTime();
+                return conta;
+            }
 
-                    valor_total = (valor_total/qtd_pessoas).toFixed(2);				
+            var conta;
+            function fecharConta() {
+                conta = getConta();
 
-                    jQuery("#resultado").text("R$ "+valor_total);
+                navigator.geolocation.getCurrentPosition(getCurrentPositionSucess, getCurrentPositionError);
+            }
 
-             }
+            function getCurrentPositionSucess(pos) {
+                var crd = pos.coords;
+                conta.coords.latitude = crd.latitude;
+                conta.coords.longitude = crd.longitude;
+                salvarConta();
+            }
 
+            function getCurrentPositionError(err) {
+                salvarConta();
+            }
+
+            function salvarConta() {
+                conta.salvar_conta();
+
+            }
         </script>
 
     </body>

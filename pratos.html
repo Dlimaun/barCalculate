@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html lang="en">
     <body>
-        
+
         <div class="btn-new ">
             <button class="btn-transform btn btn-primary" id="btn-novo"><span class="glyphicon glyphicon-plus-sign"></span> Novo</button>
         </div>
-        
+
         <div class="list-group">
             <!-- <a href="#" class="list-group-item active">
                 <span class="badge">></span>
@@ -15,50 +15,49 @@
         </div>
 
         <script>
-			
-            jQuery(document).ready(function(){				
+
+            jQuery(document).ready(function() {
 
                 var id_geral = "";
 
                 var div_lista_prato = jQuery(".list-group"),
-                    btn_novo        = jQuery('#btn-novo'),
-                    page            = jQuery('#page');
+                        btn_novo = jQuery('#btn-novo'),
+                        page = jQuery('#page');
 
-                var prato = new Prato();				
+                var prato = new Prato();
 
-                var pratos = prato.lista_pratos();				
+                var pratos = prato.lista_pratos();
 
-                jQuery.each(pratos, function(index, prato){
+                jQuery.each(pratos, function(index, prato) {
                     // console.log("index:", index);
                     // console.log("val:", prato);
-                    var html = '<a href="javascript:void(0)" data-href="edit.php?id='+prato.id+'" class="prato-item list-group-item">' +
-                                    '<span class="badge">></span>' +
-                                    '<h4 class="list-group-item-heading">'+prato.nome+'</h4>'+                                    
-                                    '<p class="list-group-item-text">'+prato.preco+'</p>' +
-                               '</a>'
-                           
+                    var html = '<a href="javascript:void(0)" data-href="edit.html?id=' + prato.id + '" class="prato-item list-group-item">' +
+                            '<span class="badge">></span>' +
+                            '<h4 class="list-group-item-heading">' + prato.nome + '</h4>' +
+                            '<p class="list-group-item-text">' + prato.preco + '</p>' +
+                            '</a>'
+
                     div_lista_prato.append(html);
-					
+
                 });
-                
-                btn_novo.off().on('click', function(){
+
+                btn_novo.off().on('click', function() {
                     set_pagina("new.html");
-                })
-                
-                page.off().on('click', '.prato-item', function(){
+                });
+
+                page.off().on('click', '.prato-item', function() {
                     var retorno = verifica_internet();
-                    
-                    if (retorno) {
-                        var link = jQuery(this).data('href');                    
-                        set_pagina(link); 
-                    } else {
-                        alert("N√£o pode editar um prato sem internet");
-                    }
-                    
+
+//                    if (retorno) {
+                        var link = jQuery(this).data('href');
+                        set_pagina(link);
+//                    } else {
+//                        alert("N√£o pode editar um prato sem internet");
+//                    }
+
                 });
 
             });
-						
 
         </script>
 
