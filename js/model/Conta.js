@@ -41,7 +41,7 @@ function Conta() {
         });
         self.total = total;
     };
-    
+
     self.salvar_conta = function() {
         console.log("Salvando conta");
 

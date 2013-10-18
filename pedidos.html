@@ -251,9 +251,13 @@
             function salvarConta() {
                 console.log("salvarConta");
                 conta.salvar_conta();
+                // pog way
+                // limpa a conta atual
                 conta = new Conta();
+                // salva
                 conta.salvar_conta_atual();
-                set_pagina("contas.html");
+                // recarrega a pagina
+                set_pagina("pedidos.html");
             }
         </script>
 
