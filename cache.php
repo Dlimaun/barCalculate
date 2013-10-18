@@ -6,8 +6,8 @@ $hashes = "";
 
 // Create the Arrays for each category
 $network = array("\n\nNETWORK:");
-$cache = array("\n\nCACHE:");
-$ignore = array("error_log","html");
+$cache = array("\n\nCACHE:",".html");
+$ignore = array("error_log",".git","nbproject","LICENSE","README");
 
 
 $dir = new RecursiveDirectoryIterator(".");

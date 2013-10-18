@@ -4,13 +4,15 @@ CACHE MANIFEST
 CACHE:
 index.html
 new.html
-edit.php
+edit.html
 pedidos.html
 pratos.html
+contas.html
 
 css/estilo.css
 bootstrap/css/bootstrap.css
 
+js/model/Conta.js
 js/model/Prato.js
 js/util/util.js
 js/jquery-2.0.2.min.js 
