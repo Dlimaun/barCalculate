@@ -21,7 +21,9 @@ jQuery(".link").off().on('click', function(){
     set_pagina(href);    
 });
 
+var pageHref;;
 function set_pagina(href) {
+    pageHref = href;
     console.log('clicked page', href);
     jQuery('#page').children().remove();
     jQuery('#page').load(href);
